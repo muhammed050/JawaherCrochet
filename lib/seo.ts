@@ -1,5 +1,5 @@
 export const origin = () =>
-  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  new URL(process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3000").origin;
 export const alternates = (locale: string, path = "") => ({
   canonical: `${origin()}/${locale}${path}`,
   languages: {
