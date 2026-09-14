@@ -27,12 +27,16 @@ export function Header({ locale, demo }: { locale: Locale; demo: boolean }) {
       </div>
       <header className="header">
         <Link className="brand" href={`/${locale}`}>
-          <Image src="/icon.svg" width={42} height={42} alt="" />
+          <Image src="/brand/logo.svg" width={42} height={42} alt="" />
           <span>
             Jawaher<small>CROCHET</small>
           </span>
         </Link>
-        <nav className={open ? "nav open" : "nav"} aria-label={t.shop}>
+        <nav
+          className={open ? "nav open" : "nav"}
+          aria-label={t.shop}
+          id="store-navigation"
+        >
           <Link onClick={() => setOpen(false)} href={`/${locale}/shop`}>
             {t.shop}
           </Link>
@@ -79,6 +83,7 @@ export function Header({ locale, demo }: { locale: Locale; demo: boolean }) {
             className="icon-button mobile-menu"
             aria-label={open ? t.cancel : t.shop}
             aria-expanded={open}
+            aria-controls="store-navigation"
             onClick={() => setOpen(!open)}
           >
             {open ? <X /> : <Menu />}

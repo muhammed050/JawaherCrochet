@@ -39,6 +39,7 @@ export function CatalogGrid({
           {(["all", "bags", "homeware", "accessories"] as const).map((c) => (
             <button
               key={c}
+              aria-pressed={category === c}
               className={category === c ? "selected" : ""}
               onClick={() => setCategory(c)}
             >
@@ -67,6 +68,10 @@ export function CatalogGrid({
           </select>
         </div>
       </div>
+      <p className="catalog-count" role="status">
+        {filtered.length}{" "}
+        {locale === "ar" ? "قطعة في المجموعة" : "parça keşfedilmeyi bekliyor"}
+      </p>
       {filtered.length ? (
         <div className="product-grid">
           {filtered.map((p) => (

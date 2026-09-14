@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { browserDb } from "@/lib/browser-db";
@@ -46,6 +47,12 @@ export function AuthForm({
         }
       }}
     >
+      <Image
+        src="/brand/logo.svg"
+        width={60}
+        height={60}
+        alt="Jawaher Crochet"
+      />
       <p className="eyebrow">JAWAHER CROCHET</p>
       <h2>{signup ? t.signup : t.login}</h2>
       <p>{enabled ? t.continueAccount : t.demo}</p>

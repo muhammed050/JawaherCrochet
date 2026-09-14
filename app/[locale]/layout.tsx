@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { isLocale, messages } from "@/lib/i18n";
 import { configured } from "@/lib/supabase";
@@ -6,6 +6,7 @@ import { getSettings } from "@/lib/catalog";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { StoreProvider } from "@/components/store-provider";
+export const viewport: Viewport = { themeColor: "#51243c" };
 export async function generateMetadata({
   params,
 }: {
@@ -25,7 +26,18 @@ export async function generateMetadata({
       template: "%s | Jawaher Crochet",
     },
     description: messages[locale].intro,
-    icons: { icon: "/icon.svg" },
+    icons: {
+      icon: [
+        { url: "/icon.svg", type: "image/svg+xml" },
+        { url: "/brand/favicon-48.png", sizes: "48x48", type: "image/png" },
+      ],
+      apple: [{ url: "/brand/apple-touch-icon.png", sizes: "180x180" }],
+    },
+    manifest: "/manifest.webmanifest",
+    twitter: {
+      card: "summary_large_image",
+      images: ["/brand/social-cover.jpg"],
+    },
     robots: configured()
       ? { index: true, follow: true }
       : { index: false, follow: false },
@@ -33,6 +45,19 @@ export async function generateMetadata({
       siteName: "Jawaher Crochet",
       locale: locale === "tr" ? "tr_TR" : "ar_AR",
       type: "website",
+      title:
+        locale === "ar"
+          ? "جواهر كروشيه | تفاصيل صغيرة، فرحة كبيرة"
+          : "Jawaher Crochet | Küçük detaylar, kocaman mutluluk",
+      description: messages[locale].intro,
+      images: [
+        {
+          url: "/brand/social-cover.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Jawaher Crochet — handmade with love",
+        },
+      ],
     },
   };
 }

@@ -102,3 +102,9 @@ Tests execute PostgreSQL migration and transactional functions in PGlite with lo
 ## ملاحظات التشغيل
 
 المتجر جاهز برمجيًا، لكن قبول الطلبات الحقيقية يحتاج ربط Supabase وWhop وإجراء دفعة تجريبية ناجحة. ارفعي المنتجات والصور والأسعار من لوحة الإدارة؛ لا يلزم إنشاء منتج يدويًا في Whop كل مرة. حقول العنوان وتصميم صفحة الدفع من المتجر، وحقول البطاقة الآمنة مضمّنة من Whop. لا ترسلي مفاتيح الخدمة السرية في المحادثة؛ أدخليها في إعدادات بيئة الاستضافة.
+
+### Visual identity (September 2026)
+
+The storefront and management dashboard share a plum, blush, lavender and pale yellow design system. The flower/J vector mark is in `public/brand/logo.svg`; matching PNG favicons, Apple touch icon, manifest icons and a 1200×630 social cover are included. Organization structured data uses the 512px logo. Arabic RTL and Turkish LTR share responsive layouts and reduced-motion support.
+
+`public/images/jawaher-hero.webp` and `jawaher-atelier.webp` were generated with the built-in image generation tool as decorative editorial imagery, not photographs of actual inventory. Real product images continue to come from the catalog. Image briefs: a rose crochet bag with bamboo handles, yarn and cream linen in warm sunlight; a crochet worktable with a cream flower coaster, lilac yarn and wooden hooks. Do not use these as evidence of actual stock or customer purchases.

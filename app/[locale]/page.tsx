@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Heart, Flower2, Sparkles } from "lucide-react";
+import {
+  ArrowUpRight,
+  Heart,
+  Flower2,
+  Sparkles,
+  MoveUpRight,
+} from "lucide-react";
 import { notFound } from "next/navigation";
 import { isLocale, messages } from "@/lib/i18n";
 import { getProducts } from "@/lib/catalog";
@@ -22,54 +28,212 @@ export default async function Home({
   const { locale } = await params;
   if (!isLocale(locale)) notFound();
   const t = messages[locale];
+  const ar = locale === "ar";
   const products = await getProducts();
+  const featured = products.filter((p) => p.featured);
+  const selection = (featured.length ? featured : products).slice(0, 4);
   return (
     <>
       <section className="hero">
         <div className="hero-copy">
           <p className="eyebrow">
-            <span /> {t.handmade}
+            <span />{" "}
+            {ar
+              ? "صُنعت على مهل، لتبقى معك"
+              : "YAVAŞÇA ÜRETİLDİ. SEVGİYLE TASARLANDI."}
           </p>
           <h1>
-            {t.hero.split("\n").map((s, i) => (
-              <span key={s} className={i ? "italic" : ""}>
-                {s}
-              </span>
-            ))}
+            {ar ? (
+              <>
+                تفاصيل صغيرة.
+                <br />
+                <em>فرحة كبيرة.</em>
+              </>
+            ) : (
+              <>
+                Küçük detaylar.
+                <br />
+                <em>Kocaman mutluluk.</em>
+              </>
+            )}
           </h1>
-          <p className="hero-description">{t.intro}</p>
-          <Link className="button" href={`/${locale}/shop`}>
-            {t.explore}
-            <ArrowUpRight size={20} />
-          </Link>
+          <p className="hero-description">
+            {ar
+              ? "خيوط ناعمة، ألوان تحبّينها، وقطع يدوية تحمل لمسة مختلفة. اكتشفي عالم جواهر كروشيه."
+              : "Yumuşacık ipler, sevdiğiniz renkler ve size eşlik edecek el yapımı parçalar. Jawaher’in renkli dünyasına hoş geldiniz."}
+          </p>
+          <div className="hero-buttons">
+            <Link className="button" href={`/${locale}/shop`}>
+              {t.explore}
+              <ArrowUpRight size={19} />
+            </Link>
+            <Link className="text-link" href={`/${locale}#story`}>
+              {t.story}
+            </Link>
+          </div>
           <div className="hero-footnote">
-            <span className="thread-line" />
-            {t.footer}
+            <Flower2 size={26} />
+            <span>
+              {ar
+                ? "كل غرزة تحمل شيئًا من القلب."
+                : "Her ilmekte biraz kalp var."}
+            </span>
           </div>
         </div>
         <div className="hero-art">
           <div className="hero-frame">
             <Image
-              src="/bag-rose.svg"
+              src="/images/jawaher-hero.webp"
               alt={
-                locale === "tr"
-                  ? "Gül kurusu örgü çanta illüstrasyonu"
-                  : "رسم توضيحي لحقيبة كروشيه وردية"
+                ar
+                  ? "تنسيق إلهامي لحقيبة كروشيه وردية وخيوط قطنية"
+                  : "Pembe örgü çanta ve pamuk iplerle ilham veren bir kompozisyon"
               }
               fill
-              priority
-              sizes="(max-width: 700px) 95vw, 50vw"
+              preload
+              sizes="(max-width: 800px) 94vw, 55vw"
             />
-            <div className="round-seal">
-              EL YAPIMI<span>♡</span>SEVGİYLE
-            </div>
           </div>
-          <span className="art-caption">01 / JAWAHER ATELIER</span>
-          <span className="floating-note">
-            {locale === "tr"
-              ? "Biricik. Tıpkı sizin gibi."
-              : "فريدة، تمامًا مثلك."}
+          <div className="round-seal">
+            <Flower2 size={28} />
+            <strong>{ar ? "بكل حب" : "EL YAPIMI"}</strong>
+            <small>JAWAHER</small>
+          </div>
+          <div className="hero-label">
+            <span className="label-dot" />
+            <span>
+              {ar ? "لمسة ناعمة ليومك" : "Gününüze yumuşacık bir dokunuş"}
+            </span>
+            <Heart size={17} />
+          </div>
+        </div>
+      </section>
+      <div className="brand-ribbon" aria-hidden="true">
+        <span>HANDMADE WITH LOVE</span>
+        <Flower2 />
+        <span>
+          {ar ? "أشياء جميلة، صُنعت على مهل" : "GÜZEL ŞEYLER ZAMAN ALIR"}
+        </span>
+        <Flower2 />
+        <span>JAWAHER CROCHET</span>
+      </div>
+      <section className="section collection-section">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">
+              {ar ? "اختاري عالمك" : "KENDİ DÜNYANIZI KEŞFEDİN"}
+            </p>
+            <h2>
+              {ar ? "لإطلالتك. لبيتك. لكِ." : "Stilinize. Evinize. Size."}
+            </h2>
+          </div>
+          <span className="collection-note">
+            {ar ? "تفاصيل تستحق أن تحبّيها" : "Sevmeye değer küçük detaylar"}
           </span>
+        </div>
+        <div className="collection-grid">
+          {(
+            [
+              [
+                "bags",
+                "/images/jawaher-hero.webp",
+                ar ? "رفيقة كل يوم" : "Her güne eşlik eder",
+              ],
+              [
+                "homeware",
+                "/images/jawaher-atelier.webp",
+                ar ? "دفء في كل زاوية" : "Her köşeye biraz sıcaklık",
+              ],
+              [
+                "accessories",
+                "/images/jawaher-atelier.webp",
+                ar ? "اللمسة التي تُكمل" : "Günü güzelleştiren dokunuş",
+              ],
+            ] as const
+          ).map(([category, image, subtitle], i) => (
+            <Link
+              key={category}
+              href={`/${locale}/shop?category=${category}`}
+              className={`collection-card collection-${i}`}
+            >
+              <div className="collection-image">
+                <Image
+                  src={image}
+                  alt=""
+                  fill
+                  sizes="(max-width: 600px) 88vw, 30vw"
+                />
+              </div>
+              <div className="collection-card-copy">
+                <div>
+                  <small>{subtitle}</small>
+                  <h3>{t[category]}</h3>
+                </div>
+                <span>
+                  <MoveUpRight size={22} />
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+      <section className="section featured-section">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">
+              {ar ? "من مجموعة جواهر" : "JAWAHER SEÇKİSİ"}
+            </p>
+            <h2>{t.featured}</h2>
+          </div>
+          <Link className="text-link" href={`/${locale}/shop`}>
+            {t.all}
+            <ArrowUpRight size={18} />
+          </Link>
+        </div>
+        <div className="product-grid">
+          {selection.map((p) => (
+            <ProductCard key={p.id} product={p} locale={locale} />
+          ))}
+        </div>
+        {!selection.length && (
+          <div className="empty-state">
+            <Flower2 />
+            <p>
+              {ar
+                ? "نحضّر قطعًا جميلة لمجموعتنا. عودي قريبًا لاكتشافها."
+                : "Koleksiyonumuz için güzel parçalar hazırlıyoruz. Yakında yeniden bekleriz."}
+            </p>
+          </div>
+        )}
+      </section>
+      <section className="story-section" id="story">
+        <div className="story-art">
+          <Image
+            src="/images/jawaher-atelier.webp"
+            alt={
+              ar
+                ? "خيوط وأدوات كروشيه على طاولة عمل بإضاءة دافئة"
+                : "Sıcak ışıkta örgü ipleri ve tığlarla bir çalışma masası"
+            }
+            fill
+            sizes="(max-width: 600px) 94vw, 48vw"
+          />
+          <span>THE ART OF SLOW MAKING</span>
+        </div>
+        <div className="story-copy">
+          <Flower2 className="story-flower" size={46} strokeWidth={1} />
+          <p className="eyebrow">{t.storyLabel}</p>
+          <h2>
+            {ar
+              ? "مو مجرّد قطعة.\nحكاية من خيط."
+              : "Sadece bir parça değil.\nİlmek ilmek bir hikâye."}
+          </h2>
+          <p>{t.storyText}</p>
+          <Link className="button secondary" href={`/${locale}/shop`}>
+            {t.explore}
+            <ArrowUpRight size={18} />
+          </Link>
+          <span className="signature">with love, Jawaher</span>
         </div>
       </section>
       <section className="benefits">
@@ -81,7 +245,7 @@ export default async function Home({
           const C = Icon as typeof Heart;
           return (
             <div key={title as string}>
-              <C strokeWidth={1.3} />
+              <C strokeWidth={1.5} />
               <div>
                 <h2>{t[title as "crafted"]}</h2>
                 <p>{t[desc as "craftedText"]}</p>
@@ -90,57 +254,16 @@ export default async function Home({
           );
         })}
       </section>
-      <section className="section">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">THE JAWAHER EDIT</p>
-            <h2>{t.featured}</h2>
-          </div>
-          <Link className="text-link" href={`/${locale}/shop`}>
-            {t.all}
-            <ArrowUpRight size={18} />
-          </Link>
-        </div>
-        <div className="product-grid">
-          {products
-            .filter((p) => p.featured)
-            .slice(0, 4)
-            .map((p) => (
-              <ProductCard key={p.id} product={p} locale={locale} />
-            ))}
-        </div>
-      </section>
-      <section className="story-section" id="story">
-        <div className="story-art">
-          <Image
-            src="/coasters.svg"
-            alt={
-              locale === "tr"
-                ? "Örgü dokusu illüstrasyonu"
-                : "رسم لنسيج الكروشيه"
-            }
-            fill
-            sizes="(max-width:700px) 100vw, 50vw"
-          />
-          <span>
-            MADE SLOWLY.
-            <br />
-            LOVED DAILY.
-          </span>
-        </div>
-        <div className="story-copy">
-          <p className="eyebrow">{t.storyLabel}</p>
-          <h2>{t.storyTitle}</h2>
-          <p>{t.storyText}</p>
-          <span className="signature">Jawaher ♡</span>
-        </div>
-      </section>
       <section className="closing">
-        <Flower2 size={34} strokeWidth={1} />
-        <h2>{t.newsletter}</h2>
-        <Link className="text-link" href={`/${locale}/shop`}>
-          {t.explore} <ArrowUpRight size={18} />
+        <span className="eyebrow">A LITTLE JOY, EVERY DAY</span>
+        <h2>
+          {ar ? "قطعتك المفضّلة تنتظرك." : "Yeni favoriniz sizi bekliyor."}
+        </h2>
+        <Link className="button" href={`/${locale}/shop`}>
+          {t.explore}
+          <ArrowUpRight size={19} />
         </Link>
+        <Flower2 className="closing-flower" size={130} strokeWidth={0.7} />
       </section>
       <script
         type="application/ld+json"
@@ -148,9 +271,17 @@ export default async function Home({
           __html: jsonLd({
             "@context": "https://schema.org",
             "@type": "Organization",
+            "@id": `${origin()}/#organization`,
             name: "Jawaher Crochet",
+            alternateName: "جواهر كروشيه",
             url: origin(),
-            logo: `${origin()}/icon.svg`,
+            logo: {
+              "@type": "ImageObject",
+              url: `${origin()}/brand/logo-512.png`,
+              width: 512,
+              height: 512,
+            },
+            image: `${origin()}/brand/social-cover.jpg`,
           }),
         }}
       />

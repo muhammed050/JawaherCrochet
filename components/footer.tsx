@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { messages } from "@/lib/i18n";
 import type { Locale, StoreSettings } from "@/lib/types";
 export function Footer({
@@ -14,7 +15,10 @@ export function Footer({
       <div className="footer-main">
         <div>
           <Link href={`/${locale}`} className="footer-brand">
-            Jawaher Crochet
+            <Image src="/brand/logo.svg" width={48} height={48} alt="" />
+            <span>
+              Jawaher<small>CROCHET</small>
+            </span>
           </Link>
           <p>{t.footer}</p>
         </div>
